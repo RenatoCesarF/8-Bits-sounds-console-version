@@ -19,7 +19,7 @@
 - [ ] Add custom icon
 - [ ] Add more configurations to change the sounds that are played
 - [ ] add a shortcut to change volumn
-
+- [ ] mouse input?
 ## ⚓Requirements
 ### Linux & mac
 - install python
