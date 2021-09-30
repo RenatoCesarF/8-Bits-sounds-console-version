@@ -16,6 +16,7 @@
 ### 📝Task List:
 - [x] Make sounds to ", Home, End, operations and etc
 - [x] .exe file
+- [ ] Add custom icon
 - [ ] Add more configurations to change the sounds that are played
 - [ ] add a shortcut to change volumn
 
