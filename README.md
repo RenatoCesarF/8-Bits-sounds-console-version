@@ -31,11 +31,21 @@ If you are in the Windows you can just run the `.exe`, if you are in another SO 
 maybe you will need to find a way to run it in the background instead of in a terminal, in the future I will try that and explain it here.
 
 - You can replace the audio files with another one with the same name and generate you onw audios. If you change any file, you need to change `"reconstruct"` configuration to `true`.
-- if you don't like the pitch change you can just put the ` min_pitch` and `max_pitch`  to 1.
+- if you don't like the pitch change you can just put the ` min_pitch` and `max_pitch`  to 0.
 - the range between the pitch changes can be adjusted with the `pitch_window_range` param
 - 
 ## 🚀Releases
 - **[v0.1.0](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/pre-release)**: First Windows release, you can change some configurations in the json and run the 8-Bits-sounds.exe program.
+
+
+## 📺 Demonstration:
+### Default sounds demonstration
+<video src="https://user-images.githubusercontent.com/62253156/135508166-c95c762d-4bcb-4b9a-8128-e02dc8316469.mp4" />
+
+
+
+### Changed sound demonstration</h3>
+<video src="https://user-images.githubusercontent.com/62253156/135508504-4e7a1518-5a97-4784-908c-37ed898de0e1.mp4" />
 
 
 ## Contributing
