@@ -3,7 +3,7 @@ from pynput.keyboard import Listener
 from pynput import keyboard
 import os
 from pygame import mixer
-from SoundModifier import SoundModifier
+from models.SoundModifier import SoundModifier
 from random import randint
 import json
 

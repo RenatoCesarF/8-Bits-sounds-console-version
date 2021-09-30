@@ -15,18 +15,27 @@
 
 ### 📝Task List:
 - [x] Make sounds to ", Home, End, operations and etc
+- [x] .exe file
 - [ ] Add more configurations to change the sounds that are played
-- [ ] .exe file
+- [ ] add a shortcut to change volumn
 
 ## ⚓Requirements
-
 ### Linux & mac
 - install python
-- `pip intall requirements.txt` inside the project folder
+- `pip intall -r ./requirements.txt` inside the project folder
 - if everything goes well it is just run python `main.py`
 
 ## 📝How to use
-- [ ] Explain the configuration file
-## Contributing
+If you are in the Windows you can just run the `.exe`, if you are in another SO you need to install Python, install the requirements and run the python main file,
+maybe you will need to find a way to run it in the background instead of in a terminal, in the future I will try that and explain it here.
 
+- You can replace the audio files with another one with the same name and generate you onw audios. If you change any file, you need to change `"reconstruct"` configuration to `true`.
+- if you don't like the pitch change you can just put the ` min_pitch` and `max_pitch`  to 1.
+- the range between the pitch changes can be adjusted with the `pitch_window_range` param
+- 
+## 🚀Releases
+- **[v0.1.0](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/pre-release)**: First Windows release, you can change some configurations in the json and run the 8-Bits-sounds.exe program.
+
+
+## Contributing
 Any pull request is welcome.
