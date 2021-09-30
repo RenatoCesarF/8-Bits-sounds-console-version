@@ -47,7 +47,4 @@ class SoundModifier:
             sounds.append(mixer.Sound(file_dir))
 
         return sounds
-
-
-  
-     
+ 
