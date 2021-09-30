@@ -19,17 +19,22 @@ open_signal_keys = [keyboard.KeyCode(char='['), keyboard.KeyCode(char='(')]
 close_signal_keys = [keyboard.KeyCode(char=']'), keyboard.KeyCode(char=')')]
 chaves_keys = [keyboard.KeyCode(char='{'), keyboard.KeyCode(char='}')]
 arrow_keys = [keyboard.Key.left,keyboard.Key.right, keyboard.Key.down, keyboard.Key.up]
-
-
-def load_folder_as_sound_array(folder_path: str) -> Tuple:
-    """With a `folder_path`, returs a tuple of mixer.Sounds with the finded audios in the folder"""
-    sounds = []
-    for filename in os.listdir(folder_path):
-        file_dir = f"{folder_path}{filename}"
-        sounds.append(mixer.Sound(file_dir))
-
-    return sounds
-
+should_not_repeat_keys = [
+    keyboard.Key.ctrl_r, 
+    keyboard.Key.ctrl_l, 
+    keyboard.Key.alt,
+    keyboard.Key.alt_l,
+    keyboard.Key.alt_r,
+    keyboard.Key.alt_gr,
+    keyboard.Key.cmd,
+    keyboard.Key.cmd_l,
+    keyboard.Key.cmd_r,
+    keyboard.Key.shift,
+    keyboard.Key.shift_l,
+    keyboard.Key.shift_r,
+    keyboard.Key.caps_lock,
+    keyboard.Key.f1,
+    ]
 
 #=========================== Filling audio arrays =====================
 
@@ -45,18 +50,24 @@ if configs['reconstruct']:
             continue
         SoundModifier.create_multiple_pitch_audios(f"./audio/{filename}",f"./audio/{filename[:-4]}s/",pitch_range, window_range)
 
+    print("Finish")
+
 #=========================== Creating the array with variations ==============
-normal_key_sounds = load_folder_as_sound_array("./audio/normal_key_sounds/")
-space_key_sounds = load_folder_as_sound_array("./audio/space_sounds/")
-tab_key_sounds = load_folder_as_sound_array("./audio/tab_sounds/")
-enter_key_sounds = load_folder_as_sound_array("./audio/enter_sounds/")
-backspace_key_sounds = load_folder_as_sound_array("./audio/backspace_sounds/")
-chaves_sounds = load_folder_as_sound_array("./audio/chaves_sounds/")
-bracket_sounds = load_folder_as_sound_array("./audio/bracket_sounds/")
-close_bracket_sounds = load_folder_as_sound_array("./audio/close_bracket_sounds/")
-arrow_sounds = load_folder_as_sound_array("./audio/arrow_sounds/")
+normal_key_sounds =       SoundModifier.load_folder_as_sound_array("./audio/normal_key_sounds/")
+space_key_sounds =        SoundModifier.load_folder_as_sound_array("./audio/space_sounds/")
+tab_key_sounds =          SoundModifier.load_folder_as_sound_array("./audio/tab_sounds/")
+enter_key_sounds =        SoundModifier.load_folder_as_sound_array("./audio/enter_sounds/")
+backspace_key_sounds =    SoundModifier.load_folder_as_sound_array("./audio/backspace_sounds/")
+chaves_sounds =           SoundModifier.load_folder_as_sound_array("./audio/chaves_sounds/")
+bracket_sounds =          SoundModifier.load_folder_as_sound_array("./audio/bracket_sounds/")
+close_bracket_sounds =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
+arrow_sounds =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
+
+global last_pressed_key
+last_pressed_key = ""
 
 def on_press(pressedKey):
+    global last_pressed_key
     if pressedKey in open_signal_keys:
         get_random_sound(bracket_sounds).play()
         return
@@ -89,12 +100,12 @@ def on_press(pressedKey):
         get_random_sound(enter_key_sounds).play()
         return
 
-
-    else:
-        get_random_sound(normal_key_sounds).play()
+    if last_pressed_key == pressedKey and pressedKey in should_not_repeat_keys:
         return
     
-    #TODO: fix the control thing: when holding ctrl it keeps playing the audio
+    get_random_sound(normal_key_sounds).play()
+    last_pressed_key = pressedKey
+    return
 
 def get_random_sound(sounds_array):
     soundsQuantity = len(sounds_array)-1
@@ -107,4 +118,5 @@ def initListener():
         listener.join()
 
 if __name__ == "__main__":
+    last_pressed_key = ""
     initListener()
