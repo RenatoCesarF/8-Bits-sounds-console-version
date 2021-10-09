@@ -35,7 +35,9 @@ should_not_repeat_keys = [
     keyboard.Key.caps_lock,
     keyboard.Key.f1,
     ]
+quit_key_combination  = {keyboard.Key.shift_l, keyboard.Key.ctrl_l, keyboard.Key.f1}
 
+quit_pressed_keys = set();
 #=========================== Filling audio arrays =====================
 
 # Generate all the pitch variatiosn of the audios in the ./audio directory into folders. 
@@ -63,11 +65,22 @@ bracket_sounds =          SoundModifier.load_folder_as_sound_array("./audio/brac
 close_bracket_sounds =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
 arrow_sounds =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
 
-global last_pressed_key
 last_pressed_key = ""
+
+def get_random_sound(sounds_array):
+    soundsQuantity = len(sounds_array)-1
+    randomPosition = randint(0,soundsQuantity)
+
+    return sounds_array[randomPosition]
 
 def on_press(pressedKey):
     global last_pressed_key
+    if pressedKey in quit_key_combination:
+        quit_pressed_keys.add(last_pressed_key)
+        if all(k in quit_pressed_keys for k in quit_key_combination):
+            print("Quitting...")
+            quit()
+
     if pressedKey in open_signal_keys:
         get_random_sound(bracket_sounds).play()
         return
@@ -102,19 +115,19 @@ def on_press(pressedKey):
 
     if last_pressed_key == pressedKey and pressedKey in should_not_repeat_keys:
         return
-    
+
     get_random_sound(normal_key_sounds).play()
     last_pressed_key = pressedKey
     return
 
-def get_random_sound(sounds_array):
-    soundsQuantity = len(sounds_array)-1
-    randomPosition = randint(0,soundsQuantity)
-
-    return sounds_array[randomPosition]
+def on_release(key):
+    try:
+        quit_pressed_keys.remove(key)
+    except:
+        pass        
 
 def initListener():
-    with Listener(on_press=on_press) as listener:
+    with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
 if __name__ == "__main__":

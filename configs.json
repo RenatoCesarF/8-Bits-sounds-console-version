@@ -1,6 +1,6 @@
 {
-    "min_pitch": 0.5,
-    "max_pitch": 1.5,
+    "min_pitch": -0.5,
+    "max_pitch": 0.5,
     "pitch_window_range": 0.1,
     "reconstruct": false
 }
