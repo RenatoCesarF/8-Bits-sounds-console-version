@@ -18,9 +18,9 @@
 - [x] .exe file
 - [x] Add custom icon
 - [x] Quit command
-- [ ] Add more configurations to change the sounds that are played
+- [ ] On quit sound
 - [ ] add a shortcut to change volumn
-- [ ] mouse input?
+
 ## ⚓Requirements
 ### Linux & mac
 - install python
