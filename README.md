@@ -18,8 +18,8 @@
 - [x] .exe file
 - [x] Add custom icon
 - [x] Quit command
-- [x] Add a shortcut to change volume
-- [ ] Saver changed volume as preferences
+- [x] Add a shortcut to change volumn
+- [ ] Save changed volumn as preferences
 - [ ] On quit sound
 
 ## ⚓Requirements
@@ -28,6 +28,12 @@
 - `pip intall -r ./requirements.txt` inside the project folder
 - if everything goes well it is just run python `main.py`
 
+## ⌨️Commands
+- **Increase Volumn** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>+</kbd>
+- **Decrease Volumn** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>-</kbd>
+- **Quit Command** <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F1</kbd>
+
+
 ## 📝How to use
 If you are in the Windows you can just run the `.exe`, if you are in another SO you need to install Python, install the requirements and run the python main file,
 maybe you will need to find a way to run it in the background instead of in a terminal, in the future I will try that and explain it here.
@@ -35,9 +41,8 @@ maybe you will need to find a way to run it in the background instead of in a te
 > if you wanna to build from the source code, use: `pyinstaller main.py -F --noconsole --icon=res/icon.ico`
 > You need to add the `audio` folder and the `config.json` file to the dist directory
 
-- You can type **`ctrl + alt + F1`** to stop the program at all
 - You can replace the audio files with another one with the same name and generate you onw audios. If you change any file, you need to change `"reconstruct"` configuration to `true`.
-- if you don't like the pitch change you can just put the ` min_pitch` and `max_pitch`  to 0.
+- if you don't like the pitch change you can just put the `min_pitch` and `max_pitch`  to 0.
 - the range between the pitch changes can be adjusted with the `pitch_window_range` param
 
 ## 🚀Releases
