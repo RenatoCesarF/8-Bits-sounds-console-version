@@ -1,51 +1,61 @@
 from typing import Tuple
-from pynput.keyboard import Listener
+from pynput import keyboard
+from pynput.keyboard import Listener, GlobalHotKeys,KeyCode
 from json import load
 from os import listdir,path
-
 from models.KeyboardPlayer import KeyboardPlayer
 from models.SoundModifier import SoundModifier
 
 
-#BUG: increase and decrease volumn not working
-audioPlayer = KeyboardPlayer();
+class EightBitsSoudns():
+    def __init__(self):
+        self.keyboardPlayer = KeyboardPlayer();
 
-json_file = open("./configs.json")
-configs = load(json_file)
+        json_file = open("./configs.json")
+        self.configs = load(json_file)
 
-# Generate all the pitch variatiosn of the audios in the ./audio directory into folders. 
-# Those folders have the same name but in plural of each file
-if configs['reconstruct']:
-    print("Reconstruction audio files...")
-    pitch_range: Tuple = [configs['min_pitch'], configs['max_pitch']]
-    window_range: int = configs['pitch_window_range']
+        if self.configs['reconstruct']:
+            self.reconstruct_sounds()
 
-    for filename in listdir("./audio"):
-        if path.isdir(f"./audio/{filename}"):
-            continue
-        SoundModifier.create_multiple_pitch_audios(f"./audio/{filename}",f"./audio/{filename[:-4]}s/",pitch_range, window_range)
+        self.init_hotkeys()
+        self.init_listener()
 
-    print("Finish")
+    def reconstruct_sounds(self):
+        # Generate all the pitch variatiosn of the audios in the ./audio directory into folders. 
+        # Those folders have the same name but in plural of each file
+        print("Reconstruction audio files...")
+        pitch_range: Tuple = [self.configs['min_pitch'], self.configs['max_pitch']]
+        window_range: int = self.configs['pitch_window_range']
 
+        for filename in listdir("./audio"):
+            if path.isdir(f"./audio/{filename}"):
+                continue
+            SoundModifier.create_multiple_pitch_audios(f"./audio/{filename}",f"./audio/{filename[:-4]}s/",pitch_range, window_range)
 
-def on_press(pressedKey):
-    audioPlayer.check_key_combinations(pressedKey)
-    audioPlayer.play_sound_based_in_key(pressedKey)
-    audioPlayer.last_pressed_key = pressedKey
-    return
+        print("Finish reconstruction")
 
-def on_release(key):
-    try:
-        audioPlayer.quit_press_keys.remove(key)
-        audioPlayer.increase_volumn_press_keys.remove(key)
-        audioPlayer.decrease_volumn_press_keys.remove(key)
-    except:
-        pass   
+    def on_press(self, key):
+        self.keyboardPlayer.play_sound_based_in_key(key)
+        self.keyboardPlayer.last_pressed_key = key
 
-def initListener():
-    with Listener(on_press=on_press, on_release=on_release) as listener:
-        listener.join()
+    def quit_program(self):
+        print("Quitting")
+        self.hotkeys.stop()
+        self.listener.stop()
+        quit()
 
-if __name__ == "__main__":
-    last_pressed_key = ""
-    initListener()
+    def init_listener(self):
+        with Listener(on_press= self.on_press) as listener:
+            self.listener = listener
+            listener.join()
+
+    def init_hotkeys(self):
+        self.hotkeys = GlobalHotKeys({
+            '<ctrl>+<shift>+<f1>': self.quit_program,
+            '<ctrl>+<alt>+=': self.keyboardPlayer.increase_volumn,
+            '<ctrl>+<alt>+-': self.keyboardPlayer.decrease_volumn,
+        })
+        self.hotkeys.start()
+
+if __name__ == '__main__':
+    program = EightBitsSoudns()

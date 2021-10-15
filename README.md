@@ -18,8 +18,9 @@
 - [x] .exe file
 - [x] Add custom icon
 - [x] Quit command
+- [x] Add a shortcut to change volumn
+- [ ] Saver changed volumn as preferences
 - [ ] On quit sound
-- [ ] add a shortcut to change volumn
 
 ## ⚓Requirements
 ### Linux & mac
@@ -47,7 +48,6 @@ maybe you will need to find a way to run it in the background instead of in a te
 ## 📺 Demonstration:
 ### Default sounds demonstration
 <video src="https://user-images.githubusercontent.com/62253156/135508166-c95c762d-4bcb-4b9a-8128-e02dc8316469.mp4" />
-
 
 
 ### Changed sound demonstration</h3>

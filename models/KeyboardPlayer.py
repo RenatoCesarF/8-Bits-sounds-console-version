@@ -1,74 +1,18 @@
+from typing import Tuple
 from pynput import keyboard
 from models.SoundModifier import SoundModifier
+from models.AudioManager import AudioManager
 from random import randint
 from pygame import mixer
 
 class KeyboardPlayer:
-    mixer.init()
-    mixer.pre_init(44100, -16, 2, 512)
-    mixer.set_num_channels(32)
+    def __init__(self):
+        self.volumn = 1
 
-    last_pressed_key = ""
-
-    quit_press_keys = set();
-    increase_volumn_press_keys = set();
-    decrease_volumn_press_keys = set();
-
-    # Key arrays
-    open_signal_keys = [keyboard.KeyCode(char='['), keyboard.KeyCode(char='(')]
-    close_signal_keys = [keyboard.KeyCode(char=']'), keyboard.KeyCode(char=')')]
-    chaves_keys = [keyboard.KeyCode(char='{'), keyboard.KeyCode(char='}')]
-    arrow_keys = [keyboard.Key.left,keyboard.Key.right, keyboard.Key.down, keyboard.Key.up]
-    should_not_repeat_keys = [
-        keyboard.Key.ctrl_r, 
-        keyboard.Key.ctrl_l, 
-        keyboard.Key.alt,
-        keyboard.Key.alt_l,
-        keyboard.Key.alt_r,
-        keyboard.Key.alt_gr,
-        keyboard.Key.cmd,
-        keyboard.Key.cmd_l,
-        keyboard.Key.cmd_r,
-        keyboard.Key.shift,
-        keyboard.Key.shift_l,
-        keyboard.Key.shift_r,
-        keyboard.Key.caps_lock,
-        keyboard.Key.f1,
-    ]
-
-    # Combination keys
-    quit_key_combination  = {keyboard.Key.shift_l, keyboard.Key.ctrl_l, keyboard.Key.f1}
-    increase_volumn_combination = {keyboard.Key.shift_l, keyboard.Key.ctrl_l, keyboard.KeyCode(char='+')}
-    decrease_volumn_combination = {keyboard.Key.shift_l, keyboard.Key.ctrl_l, keyboard.KeyCode(char='-')}
-
-    # Load sounds
-    normal_key_sounds =       SoundModifier.load_folder_as_sound_array("./audio/normal_key_sounds/")
-    space_key_sounds =        SoundModifier.load_folder_as_sound_array("./audio/space_sounds/")
-    tab_key_sounds =          SoundModifier.load_folder_as_sound_array("./audio/tab_sounds/")
-    enter_key_sounds =        SoundModifier.load_folder_as_sound_array("./audio/enter_sounds/")
-    backspace_key_sounds =    SoundModifier.load_folder_as_sound_array("./audio/backspace_sounds/")
-    chaves_sounds =           SoundModifier.load_folder_as_sound_array("./audio/chaves_sounds/")
-    bracket_sounds =          SoundModifier.load_folder_as_sound_array("./audio/bracket_sounds/")
-    close_bracket_sounds =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
-    arrow_sounds =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
-
-    def check_key_combinations(self, pressedKey):
-        if pressedKey in self.quit_key_combination:
-            self.quit_press_keys.add(pressedKey)
-            if all(k in self.quit_press_keys for k in self.quit_key_combination):
-                print("Quitting...")
-                quit()
-
-        if pressedKey in self.increase_volumn_combination:
-            self.increase_volumn_press_keys.add(pressedKey)
-            if all(k in self.increase_volumn_press_keys for k in self.increase_volumn_combination):
-                print("+")
-                return
-
-        if pressedKey in self.decrease_volumn_combination:
-            self.decrease_volumn_press_keys.add(pressedKey)
-            if all(k in self.decrease_volumn_press_keys for k in self.decrease_volumn_combination):
-                print("-")
+        self.init_mixer()
+        self.create_key_arrays()    
+        self.load_sounds()
+        self.last_pressed_key = ""
 
     def play_sound_based_in_key(self, pressedKey):
         if pressedKey in self.open_signal_keys:
@@ -107,7 +51,71 @@ class KeyboardPlayer:
             return
 
         self.get_random_sound(self.normal_key_sounds).play()
+    
+    def change_volumn(self, volumn: int):
+        AudioManager.change_array_volumn(volumn,self.normal_key_sounds)
+        AudioManager.change_array_volumn(volumn,self.space_key_sounds)
+        AudioManager.change_array_volumn(volumn,self.tab_key_sounds)
+        AudioManager.change_array_volumn(volumn,self.enter_key_sounds)
+        AudioManager.change_array_volumn(volumn,self.backspace_key_sounds)
+        AudioManager.change_array_volumn(volumn,self.chaves_sounds)
+        AudioManager.change_array_volumn(volumn,self.bracket_sounds)
+        AudioManager.change_array_volumn(volumn,self.close_bracket_sounds)
+        AudioManager.change_array_volumn(volumn,self.arrow_sounds)
+
+    def increase_volumn(self):
+        if self.volumn >= 1.1:
+            print("Volumn is already at maximum")
+            return
+        self.volumn += 0.1
+        self.change_volumn(self.volumn)
+
+    def decrease_volumn(self):
+        if self.volumn <= 0:
+            print("Volumn is already at minimun")
+            return
         
+        self.volumn -= 0.1
+        self.change_volumn(self.volumn)
+    
+    def init_mixer(self):
+        mixer.init()
+        mixer.pre_init(44100, -16, 2, 512)
+        mixer.set_num_channels(32)
+
+    def create_key_arrays(self):
+        self.open_signal_keys = [keyboard.KeyCode(char='['), keyboard.KeyCode(char='(')]
+        self.close_signal_keys = [keyboard.KeyCode(char=']'), keyboard.KeyCode(char=')')]
+        self.chaves_keys = [keyboard.KeyCode(char='{'), keyboard.KeyCode(char='}')]
+        self.arrow_keys = [keyboard.Key.left,keyboard.Key.right, keyboard.Key.down, keyboard.Key.up]
+        self.should_not_repeat_keys = [
+            keyboard.Key.ctrl_r, 
+            keyboard.Key.ctrl_l, 
+            keyboard.Key.alt,
+            keyboard.Key.alt_l,
+            keyboard.Key.alt_r,
+            keyboard.Key.alt_gr,
+            keyboard.Key.cmd,
+            keyboard.Key.cmd_l,
+            keyboard.Key.cmd_r,
+            keyboard.Key.shift,
+            keyboard.Key.shift_l,
+            keyboard.Key.shift_r,
+            keyboard.Key.caps_lock,
+            keyboard.Key.f1,
+        ]
+    
+    def load_sounds(self):
+        self.normal_key_sounds: Tuple =       SoundModifier.load_folder_as_sound_array("./audio/normal_key_sounds/")
+        self.space_key_sounds: Tuple =        SoundModifier.load_folder_as_sound_array("./audio/space_sounds/")
+        self.tab_key_sounds: Tuple =          SoundModifier.load_folder_as_sound_array("./audio/tab_sounds/")
+        self.enter_key_sounds: Tuple =        SoundModifier.load_folder_as_sound_array("./audio/enter_sounds/")
+        self.backspace_key_sounds: Tuple =    SoundModifier.load_folder_as_sound_array("./audio/backspace_sounds/")
+        self.chaves_sounds: Tuple =           SoundModifier.load_folder_as_sound_array("./audio/chaves_sounds/")
+        self.bracket_sounds: Tuple =          SoundModifier.load_folder_as_sound_array("./audio/bracket_sounds/")
+        self.close_bracket_sounds: Tuple =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
+        self.arrow_sounds: Tuple =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
+
     @staticmethod
     def get_random_sound(sounds_array):
         soundsQuantity = len(sounds_array)-1
