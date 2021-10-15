@@ -18,8 +18,8 @@
 - [x] .exe file
 - [x] Add custom icon
 - [x] Quit command
-- [x] Add a shortcut to change volumn
-- [ ] Save changed volumn as preferences
+- [x] Add a shortcut to change volume
+- [ ] Save changed volume as preferences
 - [ ] On quit sound
 
 ## ⚓Requirements
@@ -29,8 +29,8 @@
 - if everything goes well it is just run python `main.py`
 
 ## ⌨️Commands
-- **Increase Volumn** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>+</kbd>
-- **Decrease Volumn** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>-</kbd>
+- **Increase Volume** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>+</kbd>
+- **Decrease Volume** <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>-</kbd>
 - **Quit Command** <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>F1</kbd>
 
 
@@ -45,8 +45,9 @@ maybe you will need to find a way to run it in the background instead of in a te
 - if you don't like the pitch change you can just put the `min_pitch` and `max_pitch`  to 0.
 - the range between the pitch changes can be adjusted with the `pitch_window_range` param
 
-## 🚀Releases
-- **[v0.1.5](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/v0.1.5)**: Second Windows release, now with quit command and icon
+## 🚀Releases 
+- **[v0.2.0](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/v0.2)**: Add volume controll.
+- **[v0.1.5](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/v0.1.5)**: Second Windows release, now with quit command and icon.
 - **[v0.1.0](https://github.com/RenatoCesarF/8-Bits-sounds-console-version/releases/tag/pre-release)**: First Windows release, you can change some configurations in the json and run the 8-Bits-sounds.exe program.
 
 
