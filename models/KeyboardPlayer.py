@@ -7,7 +7,7 @@ from pygame import mixer
 
 class KeyboardPlayer:
     def __init__(self):
-        self.volumn = 1
+        self.volume = 1
 
         self.init_mixer()
         self.create_key_arrays()    
@@ -52,31 +52,31 @@ class KeyboardPlayer:
 
         self.get_random_sound(self.normal_key_sounds).play()
     
-    def change_volumn(self, volumn: int):
-        AudioManager.change_array_volumn(volumn,self.normal_key_sounds)
-        AudioManager.change_array_volumn(volumn,self.space_key_sounds)
-        AudioManager.change_array_volumn(volumn,self.tab_key_sounds)
-        AudioManager.change_array_volumn(volumn,self.enter_key_sounds)
-        AudioManager.change_array_volumn(volumn,self.backspace_key_sounds)
-        AudioManager.change_array_volumn(volumn,self.chaves_sounds)
-        AudioManager.change_array_volumn(volumn,self.bracket_sounds)
-        AudioManager.change_array_volumn(volumn,self.close_bracket_sounds)
-        AudioManager.change_array_volumn(volumn,self.arrow_sounds)
+    def change_volume(self, volume: int):
+        AudioManager.change_array_volume(volume,self.normal_key_sounds)
+        AudioManager.change_array_volume(volume,self.space_key_sounds)
+        AudioManager.change_array_volume(volume,self.tab_key_sounds)
+        AudioManager.change_array_volume(volume,self.enter_key_sounds)
+        AudioManager.change_array_volume(volume,self.backspace_key_sounds)
+        AudioManager.change_array_volume(volume,self.chaves_sounds)
+        AudioManager.change_array_volume(volume,self.bracket_sounds)
+        AudioManager.change_array_volume(volume,self.close_bracket_sounds)
+        AudioManager.change_array_volume(volume,self.arrow_sounds)
 
-    def increase_volumn(self):
-        if self.volumn >= 1.1:
-            print("Volumn is already at maximum")
+    def increase_volume(self):
+        if self.volume >= 1.1:
+            print("volume is already at maximum")
             return
-        self.volumn += 0.1
-        self.change_volumn(self.volumn)
+        self.volume += 0.1
+        self.change_volume(self.volume)
 
-    def decrease_volumn(self):
-        if self.volumn <= 0:
-            print("Volumn is already at minimun")
+    def decrease_volume(self):
+        if self.volume <= 0:
+            print("volume is already at minimun")
             return
         
-        self.volumn -= 0.1
-        self.change_volumn(self.volumn)
+        self.volume -= 0.1
+        self.change_volume(self.volume)
     
     def init_mixer(self):
         mixer.init()

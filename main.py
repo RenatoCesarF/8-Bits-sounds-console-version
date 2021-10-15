@@ -52,8 +52,8 @@ class EightBitsSoudns():
     def init_hotkeys(self):
         self.hotkeys = GlobalHotKeys({
             '<ctrl>+<shift>+<f1>': self.quit_program,
-            '<ctrl>+<alt>+=': self.keyboardPlayer.increase_volumn,
-            '<ctrl>+<alt>+-': self.keyboardPlayer.decrease_volumn,
+            '<ctrl>+<alt>+=': self.keyboardPlayer.increase_volume,
+            '<ctrl>+<alt>+-': self.keyboardPlayer.decrease_volume,
         })
         self.hotkeys.start()
 

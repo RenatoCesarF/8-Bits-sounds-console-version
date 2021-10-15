@@ -18,8 +18,8 @@
 - [x] .exe file
 - [x] Add custom icon
 - [x] Quit command
-- [x] Add a shortcut to change volumn
-- [ ] Saver changed volumn as preferences
+- [x] Add a shortcut to change volume
+- [ ] Saver changed volume as preferences
 - [ ] On quit sound
 
 ## ⚓Requirements
