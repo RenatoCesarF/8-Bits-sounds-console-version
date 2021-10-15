@@ -1,11 +1,7 @@
 ./__pycache__/*
 __pycache__
-./__pycache__
 
-./dist/*
-./dist
+/dist
 
-./build/*
-./build
-
+/build
 ./main.spec
