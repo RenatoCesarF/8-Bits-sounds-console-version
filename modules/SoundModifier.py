@@ -19,11 +19,11 @@ class SoundModifier:
         mkdir(folder_output)
 
         while pitch_value <= last_value:
-            SoundModifier.make_file_audio_pitched(file_directory, f"{folder_output}sound_{pitch_value:.1f}_pitch",pitch_value )
+            SoundModifier.create_audio_file_pitched(file_directory, f"{folder_output}sound_{pitch_value:.1f}_pitch",pitch_value )
             pitch_value += window_of_each
 
     @staticmethod
-    def make_file_audio_pitched(file_directory: str, output_directory: str,octaves: int= 0.5)-> None:
+    def create_audio_file_pitched(file_directory: str, output_directory: str,octaves: int= 0.5)-> None:
         sound = AudioSegment.from_file(file_directory, format="wav")
 
         # octaves: shift the pitch up by half an octave (speed will increase proportionally)
@@ -36,7 +36,6 @@ class SoundModifier:
         hipitch_sound = hipitch_sound.set_frame_rate(44100)
         hipitch_sound.export(output_directory+".wav", format="wav")
         # print(output_directory+".wav")
-        # play(hipitch_sound)
 
     @staticmethod
     def load_folder_as_sound_array(folder_path: str) -> Tuple:

@@ -1,13 +1,13 @@
 from typing import Tuple
 from pynput import keyboard
-from models.SoundModifier import SoundModifier
-from models.AudioManager import AudioManager
-from random import randint
 from pygame import mixer
+from modules.SoundModifier import SoundModifier
+from modules.AudioManager import AudioManager
+from modules.Configs import Configs
 
 class KeyboardPlayer:
-    def __init__(self):
-        self.volume = 1
+    def __init__(self,volume: int = 1):
+        self.volume = volume
 
         self.init_mixer()
         self.create_key_arrays()    
@@ -16,41 +16,41 @@ class KeyboardPlayer:
 
     def play_sound_based_in_key(self, pressedKey):
         if pressedKey in self.open_signal_keys:
-            self.get_random_sound(self.bracket_sounds).play()
+            AudioManager.get_random_sound(self.bracket_sounds).play()
             return
 
         if pressedKey in self.close_signal_keys:
-            self.get_random_sound(self.close_bracket_sounds).play()
+            AudioManager.get_random_sound(self.close_bracket_sounds).play()
             return
 
         if pressedKey in self.chaves_keys:
-            self.get_random_sound(self.chaves_sounds).play()
+            AudioManager.get_random_sound(self.chaves_sounds).play()
             return
         
         if pressedKey in self.arrow_keys:
-            self.get_random_sound(self.arrow_sounds).play()
+            AudioManager.get_random_sound(self.arrow_sounds).play()
             return
 
         if pressedKey == keyboard.Key.space:
-            self.get_random_sound(self.space_key_sounds).play()
+            AudioManager.get_random_sound(self.space_key_sounds).play()
             return
 
         if pressedKey == keyboard.Key.tab:
-            self.get_random_sound(self.tab_key_sounds).play()
+            AudioManager.get_random_sound(self.tab_key_sounds).play()
             return
 
         if pressedKey == keyboard.Key.backspace: 
-            self.get_random_sound(self.backspace_key_sounds).play()
+            AudioManager.get_random_sound(self.backspace_key_sounds).play()
             return
 
         if pressedKey == keyboard.Key.enter:
-            self.get_random_sound(self.enter_key_sounds).play()
+            AudioManager.get_random_sound(self.enter_key_sounds).play()
             return
 
         if self.last_pressed_key == pressedKey and pressedKey in self.should_not_repeat_keys:
             return
 
-        self.get_random_sound(self.normal_key_sounds).play()
+        AudioManager.get_random_sound(self.normal_key_sounds).play()
     
     def change_volume(self, volume: int):
         AudioManager.change_array_volume(volume,self.normal_key_sounds)
@@ -64,7 +64,7 @@ class KeyboardPlayer:
         AudioManager.change_array_volume(volume,self.arrow_sounds)
 
     def increase_volume(self):
-        if self.volume >= 1.1:
+        if self.volume > 1:
             print("volume is already at maximum")
             return
         self.volume += 0.1
@@ -116,9 +116,3 @@ class KeyboardPlayer:
         self.close_bracket_sounds: Tuple =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
         self.arrow_sounds: Tuple =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
 
-    @staticmethod
-    def get_random_sound(sounds_array):
-        soundsQuantity = len(sounds_array)-1
-        randomPosition = randint(0,soundsQuantity)
-
-        return sounds_array[randomPosition]

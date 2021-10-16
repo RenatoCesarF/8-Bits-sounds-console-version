@@ -3,18 +3,19 @@ from pynput import keyboard
 from pynput.keyboard import Listener, GlobalHotKeys,KeyCode
 from json import load
 from os import listdir,path
-from models.KeyboardPlayer import KeyboardPlayer
-from models.SoundModifier import SoundModifier
+from modules.AudioManager import AudioManager
+from modules.KeyboardPlayer import KeyboardPlayer
+from modules.SoundModifier import SoundModifier
+from modules.Configs import Configs
 
 
 class EightBitsSoudns():
     def __init__(self):
-        self.keyboardPlayer = KeyboardPlayer();
+        configs = Configs("./configs.json")
+        self.configs = configs
+        self.keyboardPlayer = KeyboardPlayer(configs.volume);
 
-        json_file = open("./configs.json")
-        self.configs = load(json_file)
-
-        if self.configs['reconstruct']:
+        if configs.reconstruct:
             self.reconstruct_sounds()
 
         self.init_hotkeys()
@@ -24,8 +25,8 @@ class EightBitsSoudns():
         # Generate all the pitch variatiosn of the audios in the ./audio directory into folders. 
         # Those folders have the same name but in plural of each file
         print("Reconstruction audio files...")
-        pitch_range: Tuple = [self.configs['min_pitch'], self.configs['max_pitch']]
-        window_range: int = self.configs['pitch_window_range']
+        pitch_range: Tuple = [self.configs.min_pitch, self.configs.max_pitch]
+        window_range: int = self.configs.pitch_window_range
 
         for filename in listdir("./audio"):
             if path.isdir(f"./audio/{filename}"):
@@ -42,6 +43,7 @@ class EightBitsSoudns():
         print("Quitting")
         self.hotkeys.stop()
         self.listener.stop()
+        self.configs.save_volume_config(self.keyboardPlayer.volume)
         quit()
 
     def init_listener(self):
