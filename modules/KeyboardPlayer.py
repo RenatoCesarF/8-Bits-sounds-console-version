@@ -8,7 +8,7 @@ from modules.Configs import Configs
 class KeyboardPlayer:
     def __init__(self,volume: int = 1):
         self.volume = volume
-
+        self.sounds: Tuple = [];
         self.init_mixer()
         self.create_key_arrays()    
         self.load_sounds()
@@ -53,16 +53,9 @@ class KeyboardPlayer:
         AudioManager.get_random_sound(self.normal_key_sounds).play()
     
     def change_volume(self, volume: int):
-        AudioManager.change_array_volume(volume,self.normal_key_sounds)
-        AudioManager.change_array_volume(volume,self.space_key_sounds)
-        AudioManager.change_array_volume(volume,self.tab_key_sounds)
-        AudioManager.change_array_volume(volume,self.enter_key_sounds)
-        AudioManager.change_array_volume(volume,self.backspace_key_sounds)
-        AudioManager.change_array_volume(volume,self.chaves_sounds)
-        AudioManager.change_array_volume(volume,self.bracket_sounds)
-        AudioManager.change_array_volume(volume,self.close_bracket_sounds)
-        AudioManager.change_array_volume(volume,self.arrow_sounds)
-        AudioManager.change_array_volume(volume,self.quit_sounds)
+        for sound in self.sounds:
+            AudioManager.change_array_volume(volume,sound)
+
 
     def increase_volume(self):
         if self.volume > 1:
@@ -118,3 +111,13 @@ class KeyboardPlayer:
         self.arrow_sounds: Tuple =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
         self.quit_sounds: Tuple =             SoundModifier.load_folder_as_sound_array("./audio/quit_sounds/")
 
+        self.sounds.append(self.normal_key_sounds)
+        self.sounds.append(self.space_key_sounds)
+        self.sounds.append(self.tab_key_sounds)
+        self.sounds.append(self.enter_key_sounds)
+        self.sounds.append(self.backspace_key_sounds)
+        self.sounds.append(self.chaves_sounds)
+        self.sounds.append(self.bracket_sounds)
+        self.sounds.append(self.close_bracket_sounds)
+        self.sounds.append(self.arrow_sounds)
+        self.sounds.append(self.quit_sounds)
