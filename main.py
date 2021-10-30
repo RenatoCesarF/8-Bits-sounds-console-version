@@ -1,22 +1,23 @@
 from typing import Tuple
-from pynput import keyboard
-from pynput.keyboard import Listener, GlobalHotKeys,KeyCode
-from json import load
+from pynput.keyboard import Listener, GlobalHotKeys
 from os import listdir,path
+from time import sleep
 from modules.AudioManager import AudioManager
 from modules.KeyboardPlayer import KeyboardPlayer
 from modules.SoundModifier import SoundModifier
 from modules.Configs import Configs
 
-
 class EightBitsSoudns():
     def __init__(self):
         configs = Configs("./configs.json")
         self.configs = configs
-        self.keyboardPlayer = KeyboardPlayer(configs.volume);
 
         if configs.reconstruct:
             self.reconstruct_sounds()
+
+        self.keyboardPlayer = KeyboardPlayer(configs.volume);
+        
+        print("Ready to use")
 
         self.init_hotkeys()
         self.init_listener()
@@ -41,9 +42,11 @@ class EightBitsSoudns():
 
     def quit_program(self):
         print("Quitting")
+        self.configs.save_volume_config(self.keyboardPlayer.volume)
+        AudioManager.get_random_sound(self.keyboardPlayer.quit_sounds).play()
+        sleep(2.3)
         self.hotkeys.stop()
         self.listener.stop()
-        self.configs.save_volume_config(self.keyboardPlayer.volume)
         quit()
 
     def init_listener(self):

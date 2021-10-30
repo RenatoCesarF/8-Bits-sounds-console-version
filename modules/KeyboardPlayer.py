@@ -62,6 +62,7 @@ class KeyboardPlayer:
         AudioManager.change_array_volume(volume,self.bracket_sounds)
         AudioManager.change_array_volume(volume,self.close_bracket_sounds)
         AudioManager.change_array_volume(volume,self.arrow_sounds)
+        AudioManager.change_array_volume(volume,self.quit_sounds)
 
     def increase_volume(self):
         if self.volume > 1:
@@ -115,4 +116,5 @@ class KeyboardPlayer:
         self.bracket_sounds: Tuple =          SoundModifier.load_folder_as_sound_array("./audio/bracket_sounds/")
         self.close_bracket_sounds: Tuple =    SoundModifier.load_folder_as_sound_array("./audio/close_bracket_sounds/")
         self.arrow_sounds: Tuple =            SoundModifier.load_folder_as_sound_array("./audio/arrow_sounds/")
+        self.quit_sounds: Tuple =             SoundModifier.load_folder_as_sound_array("./audio/quit_sounds/")
 
