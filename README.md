@@ -3,7 +3,6 @@
 </p>
 
 <p align= 'center'>
-
   <a href="https://gitmoji.carloscuesta.me">
       <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat" alt="Gitmoji">
   </a>
@@ -19,8 +18,8 @@
 - [x] Add custom icon
 - [x] Quit command
 - [x] Add a shortcut to change volume
-- [ ] Save changed volume as preferences
-- [ ] On quit sound
+- [X] Save changed volume as preferences
+- [X] On quit sound
 
 ## ⚓Requirements
 ### Linux & mac
