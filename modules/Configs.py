@@ -4,7 +4,6 @@ class Configs:
         self.directory = directory
         json_file = open(directory,"r+")
         self.configs = load(json_file)
-
         
         self.pitch_window_range = self.configs['pitch_window_range']
         self.max_pitch =  self.configs['max_pitch']

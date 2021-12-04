@@ -1,8 +1,6 @@
 from typing import Tuple
 from pydub import AudioSegment
 from os import mkdir
-from pygame import mixer
-import os
 import shutil
 
 
@@ -37,13 +35,3 @@ class SoundModifier:
         hipitch_sound.export(output_directory+".wav", format="wav")
         # print(output_directory+".wav")
 
-    @staticmethod
-    def load_folder_as_sound_array(folder_path: str) -> Tuple:
-        """With a `folder_path`, returs a tuple of mixer.Sounds with the finded audios in the folder"""
-        sounds = []
-        for filename in os.listdir(folder_path):
-            file_dir = f"{folder_path}{filename}"
-            sounds.append(mixer.Sound(file_dir))
-
-        return sounds
- 
