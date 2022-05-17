@@ -24,7 +24,7 @@
 ## ⚓Requirements
 ### Linux & mac
 - install python
-- `pip intall -r ./requirements.txt` inside the project folder
+- `pip install -r ./requirements.txt` inside the project folder
 - if everything goes well it is just run python `main.py`
 
 ## ⌨️Commands
